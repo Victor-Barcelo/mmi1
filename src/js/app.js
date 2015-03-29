@@ -1,22 +1,5 @@
 (function () {
-
     var app = angular.module("app", ['ui.router', 'ngMessages']);
-
-    app.constant('AUTH_EVENTS', {
-        loginSuccess: 'auth-login-success',
-        loginFailed: 'auth-login-failed',
-        logoutSuccess: 'auth-logout-success',
-        sessionTimeout: 'auth-session-timeout',
-        notAuthenticated: 'auth-not-authenticated',
-        notAuthorized: 'auth-not-authorized'
-    });
-
-    app.constant('USER_ROLES', {
-        all: '*',
-        admin: 'admin',
-        user: 'user',
-        guest: 'guest'
-    });
 
     app.config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
         $stateProvider
@@ -71,7 +54,6 @@
             });
         $urlRouterProvider.otherwise("/login");
     });
-
 
     app.run(function (user, AUTH_EVENTS, USER_ROLES, $rootScope, $state, $window) {
         $rootScope.user = {};
@@ -134,6 +116,4 @@
 
         });
     });
-
-
 }());

@@ -17,9 +17,8 @@
 
         vm.getNews = function () {
             vm.isAjaxRequesting = true;
-            var apiUrl = 'http://localhost/mmi-mu-1/api/getNewsFeed/';
             var formattedSources = JSON.stringify(vm.newsSources);
-            newsFeed.getNews(apiUrl, vm.selectedLangTo.value, formattedSources).then(function (news) {
+            newsFeed.getNews(vm.selectedLangTo.value, formattedSources).then(function (news) {
                 vm.news = news[0];
                 vm.news = vm.news.concat(news[1]).concat(news[2]);
                 vm.isAjaxRequesting = false;

@@ -1,11 +1,11 @@
 (function () {
 
-    var user = function ($http) {
+    var user = function ($http, API_URLS) {
 
         var authenticate = function (login, password) {
             var request = $http({
                 method: 'POST',
-                url: 'http://localhost/mmi-mu-1/api/login',
+                url: API_URLS.login,
                 data: $.param({login: login, password: password}),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             }).

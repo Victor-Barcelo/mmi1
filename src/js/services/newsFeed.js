@@ -1,7 +1,7 @@
 (function () {
-    var newsFeed = function ($http) {
-        var getNews = function (apiUrl, langTo, selectedSources) {
-            var encodedUrl = apiUrl + langTo + '/' + encodeURIComponent(selectedSources);
+    var newsFeed = function ($http, API_URLS) {
+        var getNews = function (langTo, selectedSources) {
+            var encodedUrl = API_URLS.getNewsFeed + '/' + langTo + '/' + encodeURIComponent(selectedSources);
             return $http.get(encodedUrl)
                 .then(function (response) {
                     return response.data.news;

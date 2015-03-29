@@ -51,7 +51,7 @@ gulp.task('test', function () {
 
 //---- Assorted
 gulp.task('js', function () {
-    return gulp.src(['./src/js/**/*.js'], {base: './src/js'})
+    return gulp.src(['./src/js/**/*.js', '!./src/js/vendor/*.js'], {base: './src/js'})
         .pipe(plumber())
         .pipe(ngannotate())
         .pipe(uglify())
@@ -126,14 +126,14 @@ gulp.task('build:dev', function () {
 
 gulp.task('build:prod', function () {
     env = 'prod';
-    runSequence('clean',
+    return runSequence('clean',
         ['html', 'js', 'sass:build', 'images']
     );
 });
 
 //----Deploy
 gulp.task('deploy:run', function () {
-    runSequence('build:prod', 'deploy:uploadAll', 'deploy:uploadConfigs', 'deploy:copyConfigs', 'deploy:runComposer');
+    runSequence('build:prod', 'deploy:clean', 'deploy:uploadAll', 'deploy:uploadConfigs', 'deploy:copyConfigs', 'deploy:runComposer');
     //runSequence('build:prod', 'deploy:clean', 'deploy:uploadAll', 'deploy:uploadConfigs', 'deploy:copyConfigs', 'deploy:runComposer');
 });
 
@@ -160,7 +160,8 @@ gulp.task('deploy:uploadAll', function () {
         '!api/app/cache/**/*',
         '!api/app/logs/**/*',
         'build/**/*',
-        '!build/js/constants.js'
+        '!build/js/constants.js',
+        '!build/js/vendor/**/*'
     ];
 
     return gulp.src(globs, {base: './build', buffer: false})
@@ -178,7 +179,8 @@ gulp.task('deploy:uploadConfigs', function () {
     });
 
     var globs = [
-        'deployConfigs/.htaccess'
+        'deployConfigs/.htaccess',
+        'deployConfigs/constants.js'
     ];
 
     return gulp.src(globs, {base: './deploy_configs', buffer: false})
@@ -188,7 +190,7 @@ gulp.task('deploy:uploadConfigs', function () {
 
 gulp.task('deploy:copyConfigs', function () {
     return gulpSSH
-        .shell(['cd ' + config.ftp.remoteSSHPath, 'cp deployConfigs/.htaccess api/'])
+        .shell(['cd ' + config.ftp.remoteSSHPath, 'cp deployConfigs/.htaccess api/', 'cp deployConfigs/constants.js js/'])
         .pipe(gutil.noop());
 });
 

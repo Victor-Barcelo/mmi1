@@ -3,8 +3,8 @@
 var app = angular.module("app");
 
 app.constant('API_URLS', {
-    login: 'http://localhost/mmi-mu-1/api/login',
-    getNewsFeed: 'http://localhost/mmi-mu-1/api/getNewsFeed'
+    login: 'api/login',
+    getNewsFeed: 'api/getNewsFeed'
 });
 
 app.constant('AUTH_EVENTS', {
