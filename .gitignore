@@ -1,0 +1,6 @@
+node_modules
+gulp-files
+api/app/cache
+api/app/logs
+gulpUserConfig.json
+build/

@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="css/login.css"/>
+<div class="login">
+    <div class="jumbotron">
+        <div class="container">
+            <img src="images/mmi.jpg" alt=""/>
+
+            <h2>Acceso de usuario</h2>
+
+            <div class="box">
+                <form name="loginForm" role="form" novalidate>
+                    <input name="login" type="text" placeholder="usuario" ng-model="loginCtrl.login" required>
+                    <input name="password" type="password" placeholder="contraseña" ng-model="loginCtrl.password"
+                           required>
+                    <button class="btn btn-default full-width"
+                            ng-click="loginCtrl.submitLogin()"><span
+                            class="glyphicon glyphicon-ok"></span></button>
+                </form>
+
+                <div ng-if="loginForm.login.$dirty" ng-messages="loginForm.login.$error">
+                    <div ng-message="required">Introduzca un nombre de usuario.</div>
+                </div>
+                <div ng-if="loginForm.password.$dirty" ng-messages="loginForm.password.$error">
+                    <div ng-message="required">Introduzca una contraseña.</div>
+                </div>
+
+                <div ng-if="loginCtrl.invalidFormInput">
+                    Debe introducir un nombre de usuario y una contraseña.
+                </div>
+
+                <div ng-if="loginCtrl.loginError">
+                    Nombre de usuario o contraseña incorrecto.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="css/newsFeed.css"/>
+
+<div class="row">
+    <div class="col-lg-6">
+
+        <form name="newsForm" class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Búsqueda de últimas noticias</legend>
+
+                <!-- Multiple Checkboxes -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Fuentes</label>
+
+                    <div class="col-md-4">
+                        <div ng-repeat="(newsSource, enabled) in newsFeedCtrl.newsSources">
+                            <label>
+                                <input type="checkbox" ng-model="newsFeedCtrl.newsSources[newsSource]"/>
+                                {{newsSource}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-md-push-3">
+                        <div class="form-group">
+                            <label>Idioma de traducción</label>
+                            <select class="form-control" ng-model="newsFeedCtrl.selectedLangTo"
+                                    ng-options="lang as lang.name for lang in newsFeedCtrl.langTo">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+
+                    <div class="col-md-4">
+                        <button id="singlebutton" name="singlebutton" class="btn btn-primary"
+                                ng-click="newsForm.$valid && newsFeedCtrl.getNews()">Buscar
+                        </button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <div class="col-lg-5">
+
+        <div ng-if="newsFeedCtrl.isAjaxRequesting">
+            <h3 class="mainFont">Obteniendo noticias del servidor...</h3>
+            <br/>
+            <br/>
+            <img id="spinner"
+                 ng-src="https://d1ow200m9i3wyh.cloudfront.net/img/assets/common/images/loader.gif">
+        </div>
+
+        <div ng-if="!newsFeedCtrl.isAjaxRequesting">
+            <div ng-if="newsFeedCtrl.news.length === 0">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-remove"></span><strong> No se han encontrado noticias</strong>
+                </div>
+            </div>
+
+            <div ng-if="newsFeedCtrl.news.length > 0">
+                <h3 class="mainFont">Resultados</h3>
+                <hr>
+                Filtrar: <input ng-model="newsFeedCtrl.searchText">
+                <hr/>
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        ng-repeat="news in newsFeedCtrl.news | filter:newsFeedCtrl.searchText track by $index">
+                        <span class="glyphicon glyphicon-triangle-right"></span> {{ news }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

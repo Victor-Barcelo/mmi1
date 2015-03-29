@@ -1,0 +1,15 @@
+{
+  "ftp": {
+    "host": "",
+    "user": "",
+    "pass": "",
+    "remoteSSHPath": ""
+  },
+  "ssh": {
+    "host":"",
+    "port": 0,
+    "username":"",
+    "passphrase":"",
+    "privateKeyPath": "/home/vto/.ssh/id_rsa"
+  }
+}
