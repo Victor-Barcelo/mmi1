@@ -51,12 +51,12 @@ gulp.task('test', function () {
 
 //---- Assorted
 gulp.task('js', function () {
-    return gulp.src(['./src/js/**/*.js', '!./src/js/vendor/*.js'], {base: './src/js'})
-        .pipe(plumber())
-        .pipe(ngannotate())
-        .pipe(uglify())
-        .pipe(gulpif(env === 'dev', sourcemaps.init({loadMaps: true})))
-        .pipe(gulpif(env === 'dev', sourcemaps.write('./')))
+    return gulp.src(['./src/js/**/*.js'], {base: './src/js'})
+        //.pipe(plumber())
+        //.pipe(ngannotate())
+        //.pipe(uglify())
+        //.pipe(gulpif(env === 'dev', sourcemaps.init({loadMaps: true})))
+        //.pipe(gulpif(env === 'dev', sourcemaps.write('./')))
         .pipe(gulp.dest('./build/js'));
 });
 
@@ -134,7 +134,6 @@ gulp.task('build:prod', function () {
 //----Deploy
 gulp.task('deploy:run', function () {
     runSequence('build:prod', 'deploy:clean', 'deploy:uploadAll', 'deploy:uploadConfigs', 'deploy:copyConfigs', 'deploy:runComposer');
-    //runSequence('build:prod', 'deploy:clean', 'deploy:uploadAll', 'deploy:uploadConfigs', 'deploy:copyConfigs', 'deploy:runComposer');
 });
 
 gulp.task('deploy:clean', function () {
@@ -160,8 +159,7 @@ gulp.task('deploy:uploadAll', function () {
         '!api/app/cache/**/*',
         '!api/app/logs/**/*',
         'build/**/*',
-        '!build/js/constants.js',
-        '!build/js/vendor/**/*'
+        '!build/js/constants.js'
     ];
 
     return gulp.src(globs, {base: './build', buffer: false})
